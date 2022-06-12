@@ -1,0 +1,25 @@
+name: Kalunwa server frontend (main) 
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Setup
+        working-directory: ./frontend/kalunwa-web-app
+        run: |           
+          npm ci
+
+      - name: Test
+        working-directory: ./frontend/kalunwa-web-app
+        run: |
+          npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
